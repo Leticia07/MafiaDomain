@@ -75,17 +75,15 @@ void draw() {
       }
     
     }
-      if (peao.getLocalizacao().x > xF && (xF > this.tabuleiro.getTerrenos().get(8).getX() || xF < this.tabuleiro.getTerrenos().get(31).getX())) {
+      if ((peao.getLocalizacao().x > xF && xF < this.tabuleiro.getTerrenos().get(8).getX()) || (peao.getLocalizacao().x < xF && xF > this.tabuleiro.getTerrenos().get(31).getX())) {
         this.tabuleiro.updateLocalizacao(peao, (xF - x0)*0.02, 0);
         backGround();
         this.tabuleiro.updatePeao();
-      } else if (peao.getLocalizacao().y > yF && (peao.getLocalizacao().y > this.tabuleiro.getTerrenos().get(0).getY() || peao.getLocalizacao().y < this.tabuleiro.getTerrenos().get(16).getY())) {
-        //println("Altera o Y");
+      } else if ((peao.getLocalizacao().y > yF && yF < this.tabuleiro.getTerrenos().get(16).getY()) || (peao.getLocalizacao().y < yF && yF > this.tabuleiro.getTerrenos().get(0).getY())) {
         this.tabuleiro.updateLocalizacao(peao, 0, (yF - y0)*0.02);
         backGround();
         this.tabuleiro.updatePeao();
-      } else { // if (peao.getLocalizacao().x < xF && peao.getLocalizacao().y < yF) {
-        //println("Entrou aqui");
+      } else { 
         x0 = peao.getLocalizacao().x;
         y0 = peao.getLocalizacao().y;
         clicked = false;
