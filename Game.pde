@@ -4,6 +4,7 @@ int state = 1, dado, cont = 0, jogador =  0;
 float x0 = 0, xF = 0, y0=0, yF=0, mIrla = 0;
 boolean clicked = false,finished = true;
 Peao peao;
+PImage img;
 
 //jogador 1 = mafia irlandesa 
 //jogador 2 = mafia chinesa
@@ -20,6 +21,7 @@ void setup() {
   this.tabuleiro.inicializarMafias();
   peao = this.tabuleiro.getMafiaChinesa().getPeao();
   //this.tabuleiro.getImg().resize(width,height);
+  this.img = loadImage("ImagemdeFundo.png");
 }
 
 void draw() {
@@ -56,39 +58,31 @@ void draw() {
           } else if (jogador == 4) {
             peao = this.tabuleiro.getMafiaRussa().getPeao();
           }
-          if (clicked) {
-            //println("Entrou no XX");
-            //x0 = peao.getLocalizacao().x;
-            //xF = (x0 - this.tabuleiro.getTerrenos().get(dado).getLarg() * dado);
-            //yF = peao.getLocalizacao().y;
-            //clicked = false;
-            //finished = false;
-          //} else {
-            //println("Entrou no YY");
-            x0 = peao.getLocalizacao().x;
-            xF = this.tabuleiro.getTerrenos().get(dado).getX();
-            y0 = peao.getLocalizacao().y;
-            yF = this.tabuleiro.getTerrenos().get(dado).getY();
-            clicked = false;
-            finished = false;
-          }
+          x0 = peao.getLocalizacao().x;
+          xF = this.tabuleiro.getTerrenos().get(dado).getX();
+          y0 = peao.getLocalizacao().y;
+          yF = this.tabuleiro.getTerrenos().get(dado).getY();
+          clicked = false;
+          finished = false;
       }
     
     }
-      if ((peao.getLocalizacao().x > xF && xF < this.tabuleiro.getTerrenos().get(8).getX()) || (peao.getLocalizacao().x < xF && xF > this.tabuleiro.getTerrenos().get(31).getX())) {
-        this.tabuleiro.updateLocalizacao(peao, (xF - x0)*0.02, 0);
-        backGround();
-        this.tabuleiro.updatePeao();
-      } else if ((peao.getLocalizacao().y > yF && yF < this.tabuleiro.getTerrenos().get(16).getY()) || (peao.getLocalizacao().y < yF && yF > this.tabuleiro.getTerrenos().get(0).getY())) {
-        this.tabuleiro.updateLocalizacao(peao, 0, (yF - y0)*0.02);
-        backGround();
-        this.tabuleiro.updatePeao();
-      } else { 
-        x0 = peao.getLocalizacao().x;
-        y0 = peao.getLocalizacao().y;
-        clicked = false;
-        finished = true;
-      }
+    
+    if ((round(peao.getLocalizacao().x) != round(xF) && xF > this.tabuleiro.getTerrenos().get(8).getX()) || (round(peao.getLocalizacao().x) != round(xF) && xF < this.tabuleiro.getTerrenos().get(31).getX())) {
+      this.tabuleiro.updateLocalizacao(peao, (xF - x0)*0.02, 0);
+      backGround();
+      this.tabuleiro.updatePeao();
+    } else if ((round(peao.getLocalizacao().y) != round(yF) && yF > this.tabuleiro.getTerrenos().get(16).getY()) || (round(peao.getLocalizacao().y) != round(yF) && yF < this.tabuleiro.getTerrenos().get(0).getY())) {
+       //println("AQUI");
+       this.tabuleiro.updateLocalizacao(peao, 0, (yF - y0)*0.02);
+       backGround();
+       this.tabuleiro.updatePeao();
+    } else { 
+       //x0 = peao.getLocalizacao().x;
+       //y0 = peao.getLocalizacao().y;
+       clicked = false;
+       finished = true;
+    }
     break;
   case 2:
 
@@ -97,8 +91,9 @@ void draw() {
 }
 
 private void backGround() {
-  background(100);
+  image(img,100,100);
   imageMode(CENTER);
+  //image(loadImage("Imagem de fundo.png"),width,height,width,height);
   image(tabuleiro.getImg(), width/2, height/2, height*0.8, height*0.8);  
   iconeJogador();
   dados();
