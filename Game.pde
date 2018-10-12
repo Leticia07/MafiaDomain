@@ -33,16 +33,16 @@ void draw() {
     this.tabuleiro.updatePeao();
     //fill(100, alpha(color(0,126,255,200)));
     fill(100);
-    tint(255,127);
-    rect(width/2-200,height/2-200,400,400);
+    tint(255, 127);
+    rect(width/2-200, height/2-200, 400, 400);
     //fill(255);
     //rect(width/2+170, height/2-200,30,30);
     //image(loadImage("Botao_Fechar.png"),width/2+170, height/2-200,30,30);
     //if((mouseX > width/2+170 && mouseX < width/2+170+30) && (mouseY > height/2-200 && mouseY < height/2-200 + 30)){
     //    image(loadImage("Botao_FecharPressionado.png"),width/2+170, height/2-200,30,30);
     //}
-    if(mousePressed){
-      if(mouseButton == LEFT && (mouseX > width/2+170 && mouseX < width/2+170+30) && (mouseY > height/2-200 && mouseY < height/2-200 + 30)){
+    if (mousePressed) {
+      if (mouseButton == LEFT && (mouseX > width/2+170 && mouseX < width/2+170+30) && (mouseY > height/2-200 && mouseY < height/2-200 + 30)) {
         noTint();
         state = 1;
       }
@@ -57,14 +57,7 @@ void draw() {
       if (!clicked && finished && mouseButton == LEFT && ((mouseX > width-(height*0.8)*0.4 && mouseX < width-(height*0.8)*0.4 + height*0.06) && (mouseY > height*0.8 && mouseY < height*0.8 + height*0.06))) {
         dado = 1;//round(random(1, 6)) + round(random(1, 6));
         clicked = true;
-        println("Dado: "+dado);      
-        if (jogador+1 > 4) {
-          jogador = 1;
-          println("Jogador "+jogador);
-        } else {
-          jogador++;
-          println("Jogador "+jogador);
-        }
+        println("Dado: "+dado);
       }
 
       //posição inicial do peão
@@ -175,11 +168,14 @@ void draw() {
       clicked = false;
       finished = true;
       resto = true;
-      if(mousePressed){
-        if(mouseButton == RIGHT){
-          state = 0;
-        }
+      if (jogador+1 > 4) {
+        jogador = 1;
+        println("Jogador "+jogador);
+      } else {
+        jogador++;
+        println("Jogador "+jogador);
       }
+      state = 0;
     }
     break;
   case 2:
@@ -194,22 +190,24 @@ private void backGround() {
   //imageMode(CENTER);
   image(tabuleiro.getImg(), (width/2 - height*0.8/2), height*0.1, height*0.8, height*0.8);
   iconeJogador();
-  dados();
+  //dados();
 }
 
 private void dados() {
+  rect(width/2-200, height/2-300,height*0.06, height*0.06);
+  rect(width/2-200 + height*0.07, height/2-300,height*0.06, height*0.06);
   //dados canto inferior esquerdo
-  rect(width-(height*0.8)*2, height*0.8, height*0.06, height*0.06); 
-  rect(width-(height*0.8)*2+height*0.07, height*0.8, height*0.06, height*0.06); 
+  //rect(width-(height*0.8)*2, height*0.8, height*0.06, height*0.06); 
+  //rect(width-(height*0.8)*2+height*0.07, height*0.8, height*0.06, height*0.06); 
   //dados canto inferior direito
-  rect(width-(height*0.8)*0.4, height*0.8, height*0.06, height*0.06); 
-  rect(width-(height*0.8)*0.4+height*0.07, height*0.8, height*0.06, height*0.06);
-  //dados canto superior esquerdo
-  rect(width-(height*0.8)*2, height*0.13, height*0.06, height*0.06); 
-  rect(width-(height*0.8)*2+height*0.07, height*0.13, height*0.06, height*0.06);
+  //rect(width-(height*0.8)*0.4, height*0.8, height*0.06, height*0.06); 
+  //rect(width-(height*0.8)*0.4+height*0.07, height*0.8, height*0.06, height*0.06);
+  ////dados canto superior esquerdo
+  //rect(width-(height*0.8)*2, height*0.13, height*0.06, height*0.06); 
+  //rect(width-(height*0.8)*2+height*0.07, height*0.13, height*0.06, height*0.06);
   //dados canto superior direito
-  rect(width-(height*0.8)*0.4, height*0.13, height*0.06, height*0.06); 
-  rect(width-(height*0.8)*0.4+height*0.07, height*0.13, height*0.06, height*0.06);
+  //rect(width-(height*0.8)*0.4, height*0.13, height*0.06, height*0.06); 
+  //rect(width-(height*0.8)*0.4+height*0.07, height*0.13, height*0.06, height*0.06);
 }
 
 private void iconeJogador() {
