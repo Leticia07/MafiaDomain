@@ -1,10 +1,10 @@
 //<>// //<>// //<>//
 Tabuleiro tabuleiro;
-int state = 1, dado, cont = 0, jogador =  0, terrenoFinal;
+int state = 0, dado, cont = 0, jogador =  1, terrenoFinal;
 float x0 = 0, xF = 0, y0=0, yF=0, mIrla = 0;
 boolean clicked = false, finished = true, moving = false, movedOne = false, resto = true;
 Peao peao;
-PImage img;
+PImage img , iconeIrlanda,iconeItalia,iconeRussia,iconeChina;
 int largura, altura, esp = 7;
 float restox, restoy;
 
@@ -24,6 +24,10 @@ void setup() {
   peao = this.tabuleiro.getMafiaChinesa().getPeao();
   //this.tabuleiro.getImg().resize(width,height);
   img = loadImage("Imagem de fundo.png");
+  iconeChina = loadImage("Ficha_MafiaChinesa.png");
+  iconeIrlanda = loadImage("Ficha_MafiaIrlandesa.png");
+  iconeItalia = loadImage("Ficha_MafiaItaliana.png");
+  iconeRussia = loadImage("Ficha_MafiaRussa.png");
 }
 
 void draw() {
@@ -31,55 +35,45 @@ void draw() {
   case 0:
     backGround();
     this.tabuleiro.updatePeao();
-    //fill(100, alpha(color(0,126,255,200)));
-    fill(100);
-    tint(255, 127);
+    fill(100, alpha(color(0,126,255,200)));
     rect(width/2-200, height/2-200, 400, 400);
-    //fill(255);
+    fill(255);
+    dados();
     //rect(width/2+170, height/2-200,30,30);
     //image(loadImage("Botao_Fechar.png"),width/2+170, height/2-200,30,30);
     //if((mouseX > width/2+170 && mouseX < width/2+170+30) && (mouseY > height/2-200 && mouseY < height/2-200 + 30)){
     //    image(loadImage("Botao_FecharPressionado.png"),width/2+170, height/2-200,30,30);
     //}
     if (mousePressed) {
-      if (mouseButton == LEFT && (mouseX > width/2+170 && mouseX < width/2+170+30) && (mouseY > height/2-200 && mouseY < height/2-200 + 30)) {
-        noTint();
+      if (mouseButton == LEFT && (mouseX > (width/2-200) + 200 - height*0.06 && mouseX < (width/2-200) + 200 - height*0.06+height*0.06) && (mouseY > (height/2-200)+200 && mouseY < (height/2-200)+200 + height * 0.06)) {
         state = 1;
+        dado = 1;//round(random(1, 6)) + round(random(1, 6));
+        clicked = true;
       }
     }
     break;
   case 1:
-    //Posição onde vai ficar a imagem dos jogadores
     backGround();
     this.tabuleiro.updatePeao();
-    //movimentação
-    if (mousePressed) {
-      if (!clicked && finished && mouseButton == LEFT && ((mouseX > width-(height*0.8)*0.4 && mouseX < width-(height*0.8)*0.4 + height*0.06) && (mouseY > height*0.8 && mouseY < height*0.8 + height*0.06))) {
-        dado = 1;//round(random(1, 6)) + round(random(1, 6));
-        clicked = true;
-        println("Dado: "+dado);
+    //posição inicial do peão
+    if (clicked) {
+      if (jogador == 1) {
+        peao = this.tabuleiro.getMafiaIrlandesa().getPeao();
+      } else if (jogador == 2) {
+        peao = this.tabuleiro.getMafiaChinesa().getPeao();
+      } else if (jogador == 3) {
+        peao = this.tabuleiro.getMafiaItaliana().getPeao();
+      } else if (jogador == 4) {
+        peao = this.tabuleiro.getMafiaRussa().getPeao();
+      }            
+      x0 = peao.getLocalizacao().x;      
+      y0 = peao.getLocalizacao().y;
+      terrenoFinal = peao.getTerrenoAtual()+dado; 
+      if (terrenoFinal > 31) {
+        terrenoFinal -= 32;
       }
-
-      //posição inicial do peão
-      if (clicked) {
-        if (jogador == 1) {
-          peao = this.tabuleiro.getMafiaIrlandesa().getPeao();
-        } else if (jogador == 2) {
-          peao = this.tabuleiro.getMafiaChinesa().getPeao();
-        } else if (jogador == 3) {
-          peao = this.tabuleiro.getMafiaItaliana().getPeao();
-        } else if (jogador == 4) {
-          peao = this.tabuleiro.getMafiaRussa().getPeao();
-        }            
-        x0 = peao.getLocalizacao().x;      
-        y0 = peao.getLocalizacao().y;
-        terrenoFinal = peao.getTerrenoAtual()+dado; 
-        if (terrenoFinal > 31) {
-          terrenoFinal -= 32;
-        }
-        clicked = false;
-        finished = false;
-      }
+      clicked = false;
+      finished = false;
     }
 
     //movimentação
@@ -194,8 +188,8 @@ private void backGround() {
 }
 
 private void dados() {
-  rect(width/2-200, height/2-300,height*0.06, height*0.06);
-  rect(width/2-200 + height*0.07, height/2-300,height*0.06, height*0.06);
+  rect((width/2-200) + 200 - height*0.06, (height/2-200)+200, height*0.06, height*0.06);
+  rect((width/2-200) + 200 - height*0.06 + height*0.07, (height/2-200)+200, height*0.06, height*0.06);
   //dados canto inferior esquerdo
   //rect(width-(height*0.8)*2, height*0.8, height*0.06, height*0.06); 
   //rect(width-(height*0.8)*2+height*0.07, height*0.8, height*0.06, height*0.06); 
@@ -214,18 +208,22 @@ private void iconeJogador() {
 
   fill(0);
   rect(0, 0, (height*0.8) *0.5, height*0.1);//Barra
-  fill(255);
-  rect(0, 0, (height*0.8) *0.5*0.25, height*0.1);//Icone
-  fill(0); // South-West
+  //fill(255);
+  //rect(0, 0, (height*0.8) *0.5*0.25, height*0.1);//Icone
+  image(iconeItalia,0,0,(height*0.8) *0.256,(height*0.8) *0.256);
+  //fill(0); // South-West
   rect(0, height*0.9, (height*0.8) *0.5, height*0.1);//Barra
-  fill(255);
-  rect(0, height*0.9, (height*0.8) *0.5*0.25, height*0.1);//Icone
-  fill(0); // North-East
+  //fill(255);
+  //rect(0, height*0.9, (height*0.8) *0.5*0.25, height*0.1);//Icone
+  image(iconeChina,0,height*0.8,(height*0.8) *0.256,(height*0.8) *0.256);
+  //fill(0); // North-East
   rect(width- (height*0.8) *0.5, 0, (height*0.8) *0.5, height*0.1);//Barra
-  fill(255);
-  rect(width - (height*0.8) *0.5*0.25, 0, (height*0.8) *0.5*0.25, height*0.1);//Icone
-  fill(0); // South-East
+  //fill(255);
+  //rect(width - (height*0.8) *0.5*0.25, 0, (height*0.8) *0.5*0.25, height*0.1);//Icone
+  image(iconeRussia,width - (height*0.8) *0.256,0,(height*0.8) *0.256,(height*0.8) *0.256);
+  //fill(0); // South-East
   rect(width- (height*0.8) *0.5, height*0.9, (height*0.8) *0.5, height*0.1);//Barra
-  fill(255);
-  rect(width- (height*0.8) *0.5*0.25, height*0.9, (height*0.8) *0.5*0.25, height*0.1);//Icone
+  //fill(255);
+  //rect(width- (height*0.8) *0.5*0.25, height*0.9, (height*0.8) *0.5*0.25, height*0.1);//Icone
+  image(iconeIrlanda,width- (height*0.8) *0.256,height*0.8,(height*0.8) *0.256,(height*0.8) *0.256);
 }
