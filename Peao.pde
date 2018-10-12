@@ -2,13 +2,12 @@ public class Peao {
   private String nome;
   private PImage icone;
   private PVector localizacao;
-  private Terreno terreno;
+  private int terrenoAtual = 0;
   //private PVector velocidade;
   
   public Peao(String nome, float x, float y){
     this.nome = nome;
     this.localizacao = new PVector(x,y);
-    this.terreno = null;
     //this.velocidade = new PVector();
     this.setImagem();
   }
@@ -26,12 +25,12 @@ public class Peao {
     //this.velocidade.y = y;
   //}
   
-  public void setTerreno(Terreno terreno){
-    this.terreno = terreno;
+  public void setTerrenoAtual(int terrenoAtual){
+    this.terrenoAtual = terrenoAtual;
   }
   
-  public Terreno getTerreno(){
-    return this.terreno;
+  public int getTerrenoAtual(){
+    return this.terrenoAtual;
   }
   
   public String getNome(){

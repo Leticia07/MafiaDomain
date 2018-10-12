@@ -4,11 +4,10 @@ public class Mafia {
   private Peao peao;
   private Peao[] peoes = new Peao[4];
 
-  public Mafia(String nome,float x,float y,Terreno terreno){
+  public Mafia(String nome,float x,float y){
     this.nome = nome;
     this.peao = new Peao(nome,x,y);
     adicionarNoVetor(this.getPeao());
-    this.peao.setTerreno(terreno);
   }
   
   public String getNome(){
