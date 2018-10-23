@@ -3,7 +3,8 @@ public class Jogador {
   private float dinheiro;
   private int capangas;
 
-  public Jogador() {
+  public Jogador(Mafia mafia) {
+    this.mafia = mafia;
     this.dinheiro = 1000000;
   }
 

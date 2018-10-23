@@ -6,16 +6,12 @@ public class Terreno {
   private int capangas;
   private float x, y, larg, alt;
 
-  public Terreno(String cor, float valor) {
-    this.cor = cor;
-    this.valor = valor;
-  }
-
-  public Terreno(float x, float y, float larg, float alt) {
+  public Terreno(float x, float y, float larg, float alt,float valor) {
     this.x = x;
     this.y = y;
     this.larg = larg;
     this.alt = alt;
+    this.valor = valor;
   }
 
   public void setCapangas(int c) {

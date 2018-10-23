@@ -1,9 +1,12 @@
+import java.util.ArrayList;
+
 public class Peao {
   private String nome;
   private PImage icone;
   private PVector localizacao;
   private int terrenoAtual = 0;
   private Mafia mafia;
+  private ArrayList<Terreno> terrenos;
   //private PVector velocidade;
 
   public Peao(String nome, float x, float y, Mafia mafia) {
@@ -12,6 +15,7 @@ public class Peao {
     //this.velocidade = new PVector();
     this.setImagem();
     this.mafia = mafia;
+    this.terrenos = new ArrayList<Terreno>();
   }
 
   public PVector getLocalizacao() {
@@ -20,6 +24,14 @@ public class Peao {
 
   public Mafia getMafia() {
     return this.mafia;
+  }
+  
+  public void addTerreno(Terreno t){
+    this.terrenos.add(t);  
+  }
+  
+  public ArrayList<Terreno> getTerrenos(){
+    return this.terrenos; 
   }
 
   // public PVector getVelocidade(){

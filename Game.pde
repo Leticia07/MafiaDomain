@@ -27,6 +27,10 @@ void setup() {
   iconeIrlanda = loadImage("Ficha_MafiaIrlandesa.png");
   iconeItalia = loadImage("Ficha_MafiaItaliana.png");
   iconeRussia = loadImage("Ficha_MafiaRussa.png");
+  tabuleiro.adicionarJogadores(new Jogador(tabuleiro.getMafiaIrlandesa()));
+  tabuleiro.adicionarJogadores(new Jogador(tabuleiro.getMafiaChinesa()));
+  tabuleiro.adicionarJogadores(new Jogador(tabuleiro.getMafiaItaliana()));
+  tabuleiro.adicionarJogadores(new Jogador(tabuleiro.getMafiaRussa()));
 }
 
 void draw() {
@@ -231,12 +235,7 @@ void draw() {
           clicked = true;
         } else if (mouseButton == LEFT && (mouseX > width/2 - 50 && mouseX < width/2 - 50+100 && mouseY > height/2-5 && mouseY < height/2-5+50)) {
           //Não comprou o terreno
-          clicked = false;
-          finished = true;
-          resto = true;
-          girarDado = false;
-          show = true;
-          state = 1;
+          fimState2();
         }
       }
 
@@ -259,16 +258,13 @@ void draw() {
             capangas++;
           } else if (mouseButton == LEFT && (mouseX > width/2+50 && mouseX < width/2+50+70 && mouseY > height/2 && mouseY < height/2+30)) {
             //OK
+            tabuleiro.getTerrenos().get(peao.getTerrenoAtual()).setDono(peao.getMafia());
+            peao.addTerreno(tabuleiro.getTerrenos().get(peao.getTerrenoAtual()));
+            peao.getMafia().getJogador().setDinheiro(-tabuleiro.getTerrenos().get(peao.getTerrenoAtual()).getValor());
+            fimState2();
           } else if (mouseButton == LEFT && (mouseX > width/2+50 && mouseX < width/2+50+70 && mouseY > height/2+40 && mouseY < height/2+40+30)) {
             //Cancelar
-            clicked = false;
-            finished = true;
-            resto = true;
-            girarDado = false;
-            show = true;
-            state = 1;
-            casas = 0;
-            capangas = 0;
+            fimState2();
           }
         } else {
           mudou = true;
@@ -282,13 +278,25 @@ void draw() {
   }
 }
 
+public void fimState2() {
+  clicked = false;
+  finished = true;
+  resto = true;
+  girarDado = false;
+  show = true;
+  state = 1;
+  casas = 0;
+  capangas = 0;
+}
+
 private void finalizarCompra() {
   fill(100, alpha(color(0, 126, 255, 200)));
   noStroke();
   rect(width/2-150, height/2-100, 300, 200);
   fill(0);
+  textSize(30);
+  text(tabuleiro.getTerrenos().get(peao.getTerrenoAtual()).getValor(), width/2-100, height/2-50);
   textSize(15);
-  text("Valor do terreno", width/2-65, height/2-50);
   fill(255);
   //Casas
   rect(width/2-100, height/2, 25, 25); //diminuir casas
@@ -340,23 +348,32 @@ private void dados() {
 private void iconeJogador() {
 
   fill(0);
+  textSize(15);
   rect(0, 0, (height*0.8) *0.5, height*0.1);//Barra
-  //fill(255);
+  fill(255);
+  text(tabuleiro.getMafiaItaliana().jogador.getDinheiro(), (height*0.8) *0.3, height*0.05);
+  fill(0);
   //rect(0, 0, (height*0.8) *0.5*0.25, height*0.1);//Icone
   image(iconeItalia, 0, 0, (height*0.8) *0.256, (height*0.8) *0.256);
   //fill(0); // South-West
   rect(0, height*0.9, (height*0.8) *0.5, height*0.1);//Barra
-  //fill(255);
+  fill(255);
+  text(tabuleiro.getMafiaChinesa().jogador.getDinheiro(), (height*0.8) *0.3, height*0.95);
+  fill(0);
   //rect(0, height*0.9, (height*0.8) *0.5*0.25, height*0.1);//Icone
   image(iconeChina, 0, height*0.8, (height*0.8) *0.256, (height*0.8) *0.256);
   //fill(0); // North-East
   rect(width- (height*0.8) *0.5, 0, (height*0.8) *0.5, height*0.1);//Barra
-  //fill(255);
+  fill(255);
+  text(tabuleiro.getMafiaRussa().jogador.getDinheiro(), (height*0.8) *1.75, height*0.05);
+  fill(0);
   //rect(width - (height*0.8) *0.5*0.25, 0, (height*0.8) *0.5*0.25, height*0.1);//Icone
   image(iconeRussia, width - (height*0.8) *0.256, 0, (height*0.8) *0.256, (height*0.8) *0.256);
   //fill(0); // South-East
   rect(width- (height*0.8) *0.5, height*0.9, (height*0.8) *0.5, height*0.1);//Barra
-  //fill(255);
+  fill(255);
+  text(tabuleiro.getMafiaIrlandesa().jogador.getDinheiro(), (height*0.8) *1.75, height*0.95);
+  fill(0);
   //rect(width- (height*0.8) *0.5*0.25, height*0.9, (height*0.8) *0.5*0.25, height*0.1);//Icone
   image(iconeIrlanda, width- (height*0.8) *0.256, height*0.8, (height*0.8) *0.256, (height*0.8) *0.256);
 }
