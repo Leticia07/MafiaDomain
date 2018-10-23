@@ -3,53 +3,59 @@ public class Peao {
   private PImage icone;
   private PVector localizacao;
   private int terrenoAtual = 0;
+  private Mafia mafia;
   //private PVector velocidade;
-  
-  public Peao(String nome, float x, float y){
+
+  public Peao(String nome, float x, float y, Mafia mafia) {
     this.nome = nome;
-    this.localizacao = new PVector(x,y);
+    this.localizacao = new PVector(x, y);
     //this.velocidade = new PVector();
     this.setImagem();
+    this.mafia = mafia;
   }
-  
-  public PVector getLocalizacao(){
+
+  public PVector getLocalizacao() {
     return this.localizacao;
   }
-  
- // public PVector getVelocidade(){
-   // return this.velocidade;
+
+  public Mafia getMafia() {
+    return this.mafia;
+  }
+
+  // public PVector getVelocidade(){
+  // return this.velocidade;
   //}
-  
+
   //public void setVelocidade(float x, float y){
-    //this.velocidade.x = x;
-    //this.velocidade.y = y;
+  //this.velocidade.x = x;
+  //this.velocidade.y = y;
   //}
-  
-  public void setTerrenoAtual(int terrenoAtual){
+
+  public void setTerrenoAtual(int terrenoAtual) {
     this.terrenoAtual = terrenoAtual;
   }
-  
-  public int getTerrenoAtual(){
+
+  public int getTerrenoAtual() {
     return this.terrenoAtual;
   }
-  
-  public String getNome(){
+
+  public String getNome() {
     return this.nome;
   }
-  
-  public PImage getImagem(){
-    return this.icone; 
+
+  public PImage getImagem() {
+    return this.icone;
   }
-  
-  private void setImagem(){
-     if(this.getNome().equals("Irlandesa")){
-       icone = loadImage("Peao_MafiaIrlandesa.png"); 
-     }else if(this.getNome().equals("Chinesa")){
-       icone = loadImage("Peao_MafiaChinesa.png"); 
-     }else if(this.getNome().equals("Russa")){
-       icone = loadImage("Peao_MafiaRussa.png"); 
-     }else if(this.getNome().equals("Italiana")){
-       icone = loadImage("Peao_MafiaItaliana.png"); 
-     }
+
+  private void setImagem() {
+    if (this.getNome().equals("Irlandesa")) {
+      icone = loadImage("Peao_MafiaIrlandesa.png");
+    } else if (this.getNome().equals("Chinesa")) {
+      icone = loadImage("Peao_MafiaChinesa.png");
+    } else if (this.getNome().equals("Russa")) {
+      icone = loadImage("Peao_MafiaRussa.png");
+    } else if (this.getNome().equals("Italiana")) {
+      icone = loadImage("Peao_MafiaItaliana.png");
+    }
   }
 }
